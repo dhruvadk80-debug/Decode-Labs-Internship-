@@ -1,0 +1,80 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 0
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /RobotModel1
+        - /TF1
+      Splitter Ratio: 0.5
+    Tree Height: 600
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Views
+    Name: Views
+
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Name: Grid
+      Reference Frame: <Fixed Frame>
+
+    - Class: rviz/RobotModel
+      Enabled: true
+      Name: RobotModel
+      Robot Description: robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Visual Enabled: true
+
+    - Class: rviz/TF
+      Enabled: true
+      Name: TF
+      Show Axes: true
+      Show Names: false
+
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /ur5_ik_planner/obstacle_markers
+      Name: Obstacles
+      Queue Size: 10
+
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: base_link
+    Frame Rate: 30
+
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 2.0
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0.3
+      Name: Current View
+      Pitch: 0.5
+      Target Frame: base_link
+      Yaw: 0.8
+    Saved: ~
+
+Window Geometry:
+  Height: 900
+  Width: 1400
+  X: 50
+  Y: 50

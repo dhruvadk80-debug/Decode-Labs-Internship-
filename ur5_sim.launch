@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+  <!--
+    ur5_sim.launch
+    ==============
+    Brings up a UR5 in Gazebo (via the ur_gazebo package), starts the
+    standard ROS-Industrial joint trajectory controller, opens RViz
+    with a preset view, and starts this package's IK + path-planning
+    node listening for goal poses on /ur5_ik_planner/goal_pose.
+
+    Prerequisites (install if missing):
+      sudo apt install ros-noetic-universal-robots ros-noetic-gazebo-ros-pkgs \
+                        ros-noetic-joint-trajectory-controller
+
+    Usage:
+      roslaunch ur5_ik_planner ur5_sim.launch
+      # in another terminal:
+      rosrun ur5_ik_planner send_goal.py 0.4 0.1 0.3
+  -->
+
+  <arg name="paused" default="false" />
+  <arg name="gui" default="true" />
+  <arg name="world" default="$(find ur5_ik_planner)/worlds/empty_table.world" />
+  <arg name="obstacles_config" default="$(find ur5_ik_planner)/config/obstacles.yaml" />
+  <arg name="rviz" default="true" />
+
+  <!-- Bring up Gazebo with the UR5. This reuses ur_gazebo's existing
+       launch file rather than duplicating its spawn/controller logic. -->
+  <include file="$(find ur_gazebo)/launch/ur5_bringup.launch">
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="world_name" value="$(arg world)" />
+  </include>
+
+  <!-- Obstacle definitions for the planner's collision checker -->
+  <rosparam command="load" file="$(arg obstacles_config)" ns="ur5_ik_planner" />
+
+  <!-- Our IK + trajectory planning node -->
+  <node name="ur5_ik_planner_node" pkg="ur5_ik_planner" type="ik_planner_node.py"
+        output="screen">
+    <param name="trajectory_duration" value="4.0" />
+    <param name="n_samples" value="100" />
+    <param name="max_bend_iterations" value="5" />
+    <param name="trajectory_topic" value="/eff_joint_traj_controller/command" />
+  </node>
+
+  <!-- RViz for visualization -->
+  <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find ur5_ik_planner)/rviz/ur5_planning.rviz" />
+
+</launch>

@@ -1,0 +1,22 @@
+# obstacles.yaml
+# --------------
+# Static spherical obstacles loaded into the planning scene at startup.
+# Each obstacle is a sphere defined by its center (x, y, z, in meters,
+# in the 'base_link' frame) and radius (meters).
+#
+# Edit this file to match your scene, or override individual values
+# from the launch file / command line with:
+#   roslaunch ur5_ik_planner ur5_sim.launch obstacles_config:=/path/to/other.yaml
+
+obstacles:
+  - name: "table_box"
+    x: 0.4
+    y: 0.0
+    z: 0.25
+    radius: 0.08
+
+  - name: "shelf_post"
+    x: 0.2
+    y: 0.35
+    z: 0.4
+    radius: 0.05

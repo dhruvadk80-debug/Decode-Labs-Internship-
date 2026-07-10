@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+  <!--
+    planner_only.launch
+    ====================
+    Starts just the IK + trajectory planning node, assuming a UR5
+    (simulated or real) and its joint_states / trajectory controller
+    are already running elsewhere. Useful when you're driving an
+    existing Gazebo session or real hardware via the UR ROS driver.
+
+    Usage:
+      roslaunch ur5_ik_planner planner_only.launch
+  -->
+
+  <arg name="obstacles_config" default="$(find ur5_ik_planner)/config/obstacles.yaml" />
+  <arg name="trajectory_topic" default="/eff_joint_traj_controller/command" />
+
+  <rosparam command="load" file="$(arg obstacles_config)" ns="ur5_ik_planner" />
+
+  <node name="ur5_ik_planner_node" pkg="ur5_ik_planner" type="ik_planner_node.py"
+        output="screen">
+    <param name="trajectory_duration" value="4.0" />
+    <param name="n_samples" value="100" />
+    <param name="max_bend_iterations" value="5" />
+    <param name="trajectory_topic" value="$(arg trajectory_topic)" />
+  </node>
+
+</launch>

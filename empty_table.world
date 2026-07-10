@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="empty_table">
+    <!--
+      empty_table.world
+      ==================
+      Minimal Gazebo world: ground plane, sun, and a simple table-like
+      box near the robot's workspace so the simulation has something
+      visible for the arm to plan around. Adjust the box pose/size to
+      roughly match the obstacles declared in config/obstacles.yaml if
+      you want the visual scene to match the planner's internal model
+      (the planner's collision checking does NOT read this file -- it
+      uses config/obstacles.yaml independently).
+    -->
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <model name="table_box">
+      <static>true</static>
+      <pose>0.4 0.0 0.15 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.3 0.3 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.3 0.3 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.4 0.2 1</ambient>
+            <diffuse>0.6 0.4 0.2 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <physics type="ode">
+      <real_time_update_rate>1000.0</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+    </physics>
+
+  </world>
+</sdf>
